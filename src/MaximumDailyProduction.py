@@ -1,49 +1,100 @@
 import matplotlib.pyplot as plt
+from numpy import void
 import pandas as pd
 
-if __name__ == "__main__":
+
+def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
+    '''
+        Algorithm to extract the maximum daily production (kWh).
+
+        Parameters
+        ----------
+        df_raw: DataFrame with raw data to extract.
+        
+        Returns
+        -------
+        pd.DataFrame
+
+    '''
+
+    # Preprocessing (Parse date)
+    raw_df['Hora'] = pd.to_datetime(raw_df['Hora'], format="%d/%m/%Y %H:%M:%S")
+
+    cols = ['Date', 'MaxDailyProduction']
+    dataframe = pd.DataFrame(columns=cols)
     
-    dataframe = pd.read_excel("../data/Datoshistóricos-20220410015735.xls", skiprows=2)
-
-    #Parse date
-    dataframe['Hora'] = pd.to_datetime(dataframe['Hora'], format="%d/%m/%Y %H:%M:%S")
-
-    dataframe_len = len(dataframe)
+    df_raw_len = len(df_raw)
     max = 0.0
     max_array = []
     dates = []
 
-    for index in range(dataframe_len):
+    # Extract maximum daily production
+    for index in range(df_raw_len):
 
-        if (index + 1 < dataframe_len and 
-            dataframe['Salida de hoy(kWh)'][index] > max and 
-            dataframe['Salida de hoy(kWh)'][index + 1 ] == 0):
+        if (index + 1 < df_raw_len and 
+            df_raw['Salida de hoy(kWh)'][index] > max and 
+            df_raw['Salida de hoy(kWh)'][index + 1 ] == 0): 
 
-            max = dataframe['Salida de hoy(kWh)'][index]
-            print(dataframe['Hora'][index],'-', max, '(kWh)')
+            # We have the daily maximum!
+            max = df_raw['Salida de hoy(kWh)'][index]
             max_array.append(max)
-            dates.append(str(dataframe['Hora'][index].strftime("%d/%m %H:%M:%S")))
+            dates.append(str(df_raw['Hora'][index].strftime("%d/%m/%y %H:%M:%S")))
             max = 0
         
-        if(index + 1 == dataframe_len): # Ultimo elemento
-            max = dataframe['Salida de hoy(kWh)'][index]
-            print(dataframe['Hora'][index],'-', max, '(kWh)')
+        if(index + 1 == df_raw_len): # Last elemento
+            max = df_raw['Salida de hoy(kWh)'][index]
             max_array.append(max)
-            dates.append(str(dataframe['Hora'][index].strftime("%d/%m %H:%M:%S")))
+            dates.append(str(df_raw['Hora'][index].strftime("%d/%m/%y %H:%M:%S")))
             max = 0
+    
+    dataframe['Date'] = dates
+    dataframe['MaxDailyProduction'] = max_array
+
+    return dataframe
+
+def PlotMaxDailyProduction(dataframe, fileOutput) -> void:
+    
+    '''
+        Plot and save as an image the maximum daily production date (kWh).
+
+        Parameters
+        ----------
+        dataframe: DataFrame with the maximum daily production date.
+
+        fileOutput: Path plus name of the file to save it.
+    
+
+    '''
 
     fig, axs = plt.subplots(nrows=1, ncols=1, figsize=(16,8), dpi=600)
 
+    axs.bar(dataframe['Date'], dataframe['MaxDailyProduction'])
+
     fig.suptitle('Electricidad Asunción Esteban Fuente S.L.', fontsize=28)
-    axs.bar(dates, max_array)
     axs.set_ylabel('Producción máxima (kWh)', fontsize=24)
     axs.set_xlabel('Días', fontsize=24)
-    axs.set_xticklabels(dates, rotation = 70, ha = 'center', fontsize=15)
+    axs.set_xticklabels(dataframe['Date'], rotation = 70, ha = 'center', fontsize=15)
     axs.grid(True)
 
-    for i in range(len(dates)):
-        axs.text(x=dates[i], y=max_array[i] + 0.1, s=max_array[i], fontsize=20 , horizontalalignment='center')
-
+    for i in range(len(dataframe['Date'])):
+        axs.text(   x=dataframe['Date'][i], 
+                    y=dataframe['MaxDailyProduction'][i] + 0.1, 
+                    s=dataframe['MaxDailyProduction'][i], 
+                    fontsize=20 , 
+                    horizontalalignment='center')
 
     fig.tight_layout()
-    fig.savefig("../images/MaxProductionDiaria.jpg")
+    fig.savefig(fileOutput)
+
+if __name__ == "__main__":
+    
+    data_dir = "../data/"
+    data_file = "Datos históricos-20220410174825.xls"
+
+    raw_df = pd.read_excel(data_dir + data_file, skiprows=2)
+
+    df_MaxDailyPro = GetMaxDailyProduction(raw_df)
+    print(df_MaxDailyPro)
+    print(df_MaxDailyPro.describe())
+
+    PlotMaxDailyProduction(df_MaxDailyPro, "../images/MaxProductionDiaria.jpg")
