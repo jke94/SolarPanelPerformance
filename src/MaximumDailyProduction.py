@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from numpy import void
 import pandas as pd
-
+import numpy as np
 
 def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
     '''
@@ -20,13 +20,14 @@ def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
     # Preprocessing (Parse date)
     raw_df['Hora'] = pd.to_datetime(raw_df['Hora'], format="%d/%m/%Y %H:%M:%S")
 
-    cols = ['Date', 'MaxDailyProduction']
+    cols = ['Date', 'MaxDailyProduction', 'DailyAverage']
     dataframe = pd.DataFrame(columns=cols)
     
     df_raw_len = len(df_raw)
     max = 0.0
     max_array = []
     dates = []
+    daily_average = []
 
     # Extract maximum daily production
     for index in range(df_raw_len):
@@ -47,8 +48,14 @@ def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
             dates.append(str(df_raw['Hora'][index].strftime("%d/%m/%y %H:%M:%S")))
             max = 0
     
+    # Extract daily average
+    for index in range(len(dates)):
+        daily_average.append(np.mean(max_array[0:index])) 
+
+
     dataframe['Date'] = dates
     dataframe['MaxDailyProduction'] = max_array
+    dataframe['DailyAverage'] = daily_average
 
     return dataframe
 
@@ -63,16 +70,19 @@ def PlotMaxDailyProduction(dataframe, fileOutput) -> void:
 
         fileOutput: Path plus name of the file to save it.
     
-
     '''
 
     fig, axs = plt.subplots(nrows=1, ncols=1, figsize=(16,8), dpi=600)
 
     axs.bar(dataframe['Date'], dataframe['MaxDailyProduction'])
+    axs.plot(dataframe['Date'], dataframe['DailyAverage'], color='red', 
+                linewidth=4.0)
 
-    fig.suptitle('Electricidad Asunción Esteban Fuente S.L.', fontsize=28)
-    axs.set_ylabel('Producción máxima (kWh)', fontsize=24)
-    axs.set_xlabel('Días', fontsize=24)
+    axs.legend(['Daily average (kWh)', 'Max daily production (kWh)'])
+    
+    fig.suptitle('Solar panels production', fontsize=28)
+    axs.set_ylabel('Maximum Production (kWh)', fontsize=24)
+    axs.set_xlabel('Dates', fontsize=24)
     axs.set_xticklabels(dataframe['Date'], rotation = 70, ha = 'center', fontsize=15)
     axs.grid(True)
 
