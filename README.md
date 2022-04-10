@@ -16,5 +16,5 @@ A repository with python scripts to extract data plots based on database generat
 2. Edit 'MaximumDailyProduction.py' file with the correct .xls file name.
 3. Run: 'MaximumDailyProduction.py' file.
 
-## Generated imaged example.
+## Example image.
 ![imagen](https://user-images.githubusercontent.com/53972851/162615291-1060fb89-6670-4f11-9b2d-77fd794a5765.png)
