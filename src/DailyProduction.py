@@ -99,7 +99,7 @@ def PlotMaxDailyProduction(dataframe, fileOutput) -> void:
 if __name__ == "__main__":
     
     data_dir = "../data/"
-    data_file = "Datos históricos-20220410174825.xls"
+    data_file = "Datos históricos-20220412002558.xls"
 
     raw_df = pd.read_excel(data_dir + data_file, skiprows=2)
 
