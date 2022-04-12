@@ -80,7 +80,7 @@ def PlotMaxDailyProduction(dataframe, fileOutput) -> void:
 
     axs.legend(['Daily average (kWh)', 'Max daily production (kWh)'])
     
-    fig.suptitle('Solar panels production', fontsize=28)
+    fig.suptitle('Solar panels production' + ' (' + str(len(dataframe)) + ' days)', fontsize=28)
     axs.set_ylabel('Maximum Production (kWh)', fontsize=24)
     axs.set_xlabel('Dates', fontsize=24)
     axs.set_xticklabels(dataframe['Date'], rotation = 70, ha = 'center', fontsize=15)
@@ -99,7 +99,7 @@ def PlotMaxDailyProduction(dataframe, fileOutput) -> void:
 if __name__ == "__main__":
     
     data_dir = "../data/"
-    data_file = "Datos históricos-20220412002558.xls"
+    data_file = "Datos históricos-20220413043835-Power.xls"
 
     raw_df = pd.read_excel(data_dir + data_file, skiprows=2)
 
