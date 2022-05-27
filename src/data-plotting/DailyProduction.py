@@ -1,8 +1,29 @@
 from datetime import datetime
+from turtle import color
 import matplotlib.pyplot as plt
 from numpy import void
 import pandas as pd
 import numpy as np
+
+def GetDailyAverage(array_dailyProduction):
+    '''
+        Calculate daily average production date (kWh).
+
+        Parameters
+        ----------
+        array: Array with the daily production values.
+
+        return: Array with the average.
+    
+    '''
+
+    dailyAverage = []
+    index = 0
+
+    for index in range(len(array_dailyProduction)):
+        dailyAverage.append(round(np.mean(array_dailyProduction[:index + 1]),2))
+
+    return dailyAverage
 
 def PlotMaxDailyProduction(dataframe, fileOutput) -> void:
     
@@ -16,14 +37,21 @@ def PlotMaxDailyProduction(dataframe, fileOutput) -> void:
         fileOutput: Path plus name of the file to save it.
     
     '''
-
+    
+    # Crete figure
     fig, axs = plt.subplots(nrows=1, ncols=1, figsize=(16,8), dpi=600)
 
-    axs.bar(dataframe['Date'], dataframe['MaxDailyProduction'])
-    axs.plot(dataframe['Date'], dataframe['DailyHistoricalAverage'], color='red', 
-                linewidth=4.0)
+    # Set plot bar for daily production.
+    axs.bar(dataframe['Date'], dataframe['MaxDailyProduction'], color='royalblue')
 
-    axs.legend(['Historical average production (kWh)', 'Max daily production (kWh)'])
+    # Set plot line for daily historical average production.
+    axs.plot(dataframe['Date'], dataframe['DailyHistoricalAverage'], color='red', linewidth=4.0)
+
+    # Set plot line for daily average production.
+    axs.plot(dataframe['Date'], GetDailyAverage(dataframe['MaxDailyProduction']), color='darkorange', linewidth=4.0)
+    
+    axs.legend(['Historical average production (kWh)', 'Daily average production (kWh)','Production (kWh)'],
+        bbox_to_anchor=(0.4,1.01,1,0.2), loc="upper left")
     
     fig.suptitle('Solar panels production' + ' (' + str(len(dataframe)) + ' days)', fontsize=28)
     axs.set_ylabel('Maximum Production (kWh)', fontsize=24)
@@ -51,8 +79,8 @@ if __name__ == "__main__":
     data_input_file = "SolarPanel-MaxDailyProduction.csv"
     plot_output_image = "DailyProduction.jpg"
 
-    startDay    = datetime(2022, 4, 1)
-    endDay      = datetime(2022, 5, 1)
+    startDay    = datetime(2022, 5, 1)
+    endDay      = datetime(2022, 6, 1)
 
     raw_df = pd.read_csv(data_dir + data_input_file, sep=';')
     raw_df['Date'] =  pd.to_datetime(raw_df['Date'], format='%Y-%m-%d %H:%M:%S')
