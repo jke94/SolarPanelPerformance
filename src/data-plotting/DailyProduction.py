@@ -37,7 +37,7 @@ def PlotMaxDailyProduction(dataframe, fileOutput) -> void:
         fileOutput: Path plus name of the file to save it.
     
     '''
-    
+
     # Crete figure
     fig, axs = plt.subplots(nrows=1, ncols=1, figsize=(16,8), dpi=600)
 
@@ -53,9 +53,14 @@ def PlotMaxDailyProduction(dataframe, fileOutput) -> void:
     axs.legend(['Historical average production (kWh)', 'Daily average production (kWh)','Production (kWh)'],
         bbox_to_anchor=(0.4,1.01,1,0.2), loc="upper left")
     
-    fig.suptitle('Solar panels production' + ' (' + str(len(dataframe)) + ' days)', fontsize=28)
+    fig.suptitle('Solar panels production' + 
+        ' - Total: ' + str(round(sum(dataframe['MaxDailyProduction']),2)) + 
+        ' kWh - Date average: ' + str(round(np.mean(dataframe['MaxDailyProduction']),2)) + ' kWh',
+        fontsize=24)
+
+
     axs.set_ylabel('Maximum Production (kWh)', fontsize=24)
-    axs.set_xlabel('Dates', fontsize=24)
+    axs.set_xlabel('Dates' + ' (' + str(len(dataframe)) + ' days)', fontsize=24)
     axs.set_xticklabels(dataframe['Date'], rotation = 70, ha = 'center', fontsize=10)
     axs.grid(True)
 
