@@ -77,17 +77,19 @@ if __name__ == "__main__":
     csv_raw_data = "SolarPanel-RawData.csv"
     csv_max_daily_production = "SolarPanel-MaxDailyProduction.csv"
 
-    data_fileA = "SolarPanel-March-FullFeatures.xls"
-    data_fileB = "SolarPanel-April-1-of-2-FullFeatures.xls"
-    data_fileC = "SolarPanel-April-2-of-2-FullFeatures.xls"
-    data_fileD = "SolarPanel-May-1-of-2-FullFeatures.xls"
-    data_fileE = "SolarPanel-May-2-of-2-FullFeatures.xls"
+    data_fileA = "SolarPanel-03-March-1-of-1-FullFeatures.xls"
+    data_fileB = "SolarPanel-04-April-1-of-2-FullFeatures.xls"
+    data_fileC = "SolarPanel-04-April-2-of-2-FullFeatures.xls"
+    data_fileD = "SolarPanel-05-May-1-of-2-FullFeatures.xls"
+    data_fileE = "SolarPanel-05-May-2-of-2-FullFeatures.xls"
+    data_fileF = "SolarPanel-06-June-1-of-2-FullFeatures.xls"
 
     dataframeA = pd.read_excel(data_dir + data_fileA, skiprows=2)
     dataframeB = pd.read_excel(data_dir + data_fileB, skiprows=2)
     dataframeC = pd.read_excel(data_dir + data_fileC, skiprows=2)
     dataframeD = pd.read_excel(data_dir + data_fileD, skiprows=2)
     dataframeE = pd.read_excel(data_dir + data_fileE, skiprows=2)
+    dataframeF = pd.read_excel(data_dir + data_fileF, skiprows=2)
 
 
     df_columns = [  'Hora', 'Modo de trabajo', 'V MPPT 1(V)', 'I MPPT 1(A)', 'Ua(V)',
@@ -98,7 +100,7 @@ if __name__ == "__main__":
     df_columns = [item.replace('Temperatura(℃)', 'Temperature(ºC)') for item in df_columns]
 
     dataframe = pd.concat(
-            [dataframeA, dataframeB, dataframeC, dataframeD, dataframeE])
+            [dataframeA, dataframeB, dataframeC, dataframeD, dataframeE, dataframeF])
     dataframe.columns = df_columns
 
 
