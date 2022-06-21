@@ -9,6 +9,7 @@ In the web:
         3. Update the script to generate the data.
 
 '''
+import numpy
 import pandas as pd
 from numpy import void
 import numpy as np
@@ -30,7 +31,7 @@ def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
     # Preprocessing (Parse date)
     df_raw['Hora'] = pd.to_datetime(df_raw['Hora'], format="%d/%m/%Y %H:%M:%S")
 
-    cols = ['Date', 'MaxDailyProduction', 'DailyHistoricalAverage']
+    cols = ['Date', 'MaxDailyProduction', 'DailyHistoricalAverage','MaxPoder','MaxPoderTime']
     df = pd.DataFrame(columns=cols)
 
     df_raw_len = len(df_raw)
@@ -38,6 +39,12 @@ def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
     max_array = []
     dates = []
     daily_average = []
+
+    max_poder = 0
+    max_poder_array = []
+
+    max_poder_time = 0
+    max_poder_time_array = []
 
     # Extract maximum daily production
     for index in range(df_raw_len):
@@ -52,11 +59,28 @@ def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
             dates.append(str(df_raw['Hora'][index].strftime("%Y-%m-%d %H:%M:%S")))
             max = 0
 
+            max_poder_array.append(max_poder)
+            max_poder = 0
+
+            max_poder_time_array.append(max_poder_time)
+            max_poder_time = 0
+
         if(index + 1 == df_raw_len): # Last elemento
             max = df_raw['Salida de hoy(kWh)'][index]
             max_array.append(max)
             dates.append(str(df_raw['Hora'][index].strftime("%Y-%m-%d %H:%M:%S")))
             max = 0
+
+            max_poder_array.append(max_poder)
+            max_poder = 0
+
+            max_poder_time_array.append(max_poder_time)
+            max_poder_time = 0
+
+        if(df_raw['Poder(W)'][index] > max_poder):
+                max_poder = df_raw['Poder(W)'][index]
+                max_poder_time = df_raw['Hora'][index].strftime("%H:%M:%S")
+                
 
     # Extract daily average
     index = 0
@@ -67,6 +91,8 @@ def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
     df['Date'] = dates
     df['MaxDailyProduction'] = max_array
     df['DailyHistoricalAverage'] = daily_average
+    df['MaxPoder'] = max_poder_array
+    df['MaxPoderTime'] = max_poder_time_array
 
     return df
 
@@ -83,6 +109,7 @@ if __name__ == "__main__":
     data_fileD = "SolarPanel-05-May-1-of-2-FullFeatures.xls"
     data_fileE = "SolarPanel-05-May-2-of-2-FullFeatures.xls"
     data_fileF = "SolarPanel-06-June-1-of-2-FullFeatures.xls"
+    data_fileG = "SolarPanel-06-June-2-of-2-FullFeatures.xls"
 
     dataframeA = pd.read_excel(data_dir + data_fileA, skiprows=2)
     dataframeB = pd.read_excel(data_dir + data_fileB, skiprows=2)
@@ -90,6 +117,7 @@ if __name__ == "__main__":
     dataframeD = pd.read_excel(data_dir + data_fileD, skiprows=2)
     dataframeE = pd.read_excel(data_dir + data_fileE, skiprows=2)
     dataframeF = pd.read_excel(data_dir + data_fileF, skiprows=2)
+    dataframeG = pd.read_excel(data_dir + data_fileG, skiprows=2)
 
 
     df_columns = [  'Hora', 'Modo de trabajo', 'V MPPT 1(V)', 'I MPPT 1(A)', 'Ua(V)',
@@ -100,7 +128,7 @@ if __name__ == "__main__":
     df_columns = [item.replace('Temperatura(℃)', 'Temperature(ºC)') for item in df_columns]
 
     dataframe = pd.concat(
-            [dataframeA, dataframeB, dataframeC, dataframeD, dataframeE, dataframeF])
+            [dataframeA, dataframeB, dataframeC, dataframeD, dataframeE, dataframeF, dataframeG])
     dataframe.columns = df_columns
 
 
@@ -109,6 +137,8 @@ if __name__ == "__main__":
             index=False, 
             sep=';', 
             encoding='utf-8-sig')
+
+    print("Dataframe 1: Full data (row x col):\t", dataframe.shape)
             
     dataframe = pd.read_csv(data_dir + csv_raw_data, sep=';')
 
@@ -119,3 +149,5 @@ if __name__ == "__main__":
             index=False, 
             sep=';', 
             encoding='utf-8-sig')
+
+    print("Dataframe 2: Daily Prod. (row x col):\t", df_MaxDailyProduction.shape)
