@@ -9,7 +9,6 @@ In the web:
         3. Update the script to generate the data.
 
 '''
-import numpy
 import pandas as pd
 from numpy import void
 import numpy as np
@@ -110,6 +109,7 @@ if __name__ == "__main__":
     data_fileE = "SolarPanel-05-May-2-of-2-FullFeatures.xls"
     data_fileF = "SolarPanel-06-June-1-of-2-FullFeatures.xls"
     data_fileG = "SolarPanel-06-June-2-of-2-FullFeatures.xls"
+    data_fileH = "SolarPanel-07-July-1-of-2-FullFeatures.xls"
 
     dataframeA = pd.read_excel(data_dir + data_fileA, skiprows=2)
     dataframeB = pd.read_excel(data_dir + data_fileB, skiprows=2)
@@ -118,6 +118,7 @@ if __name__ == "__main__":
     dataframeE = pd.read_excel(data_dir + data_fileE, skiprows=2)
     dataframeF = pd.read_excel(data_dir + data_fileF, skiprows=2)
     dataframeG = pd.read_excel(data_dir + data_fileG, skiprows=2)
+    dataframeH = pd.read_excel(data_dir + data_fileH, skiprows=2)
 
 
     df_columns = [  'Hora', 'Modo de trabajo', 'V MPPT 1(V)', 'I MPPT 1(A)', 'Ua(V)',
@@ -128,7 +129,15 @@ if __name__ == "__main__":
     df_columns = [item.replace('Temperatura(℃)', 'Temperature(ºC)') for item in df_columns]
 
     dataframe = pd.concat(
-            [dataframeA, dataframeB, dataframeC, dataframeD, dataframeE, dataframeF, dataframeG])
+        [       dataframeA, # "SolarPanel-03-March-1-of-1-FullFeatures.xls"
+                dataframeB, # "SolarPanel-04-April-1-of-2-FullFeatures.xls"
+                dataframeC, # "SolarPanel-04-April-2-of-2-FullFeatures.xls"
+                dataframeD, # "SolarPanel-05-May-1-of-2-FullFeatures.xls"
+                dataframeE, # "SolarPanel-05-May-2-of-2-FullFeatures.xls"
+                dataframeF, # "SolarPanel-06-June-1-of-2-FullFeatures.xls"
+                dataframeG, # "SolarPanel-06-June-2-of-2-FullFeatures.xls"
+                dataframeH  # "SolarPanel-07-July-1-of-2-FullFeatures.xls"
+        ])
     dataframe.columns = df_columns
 
 
