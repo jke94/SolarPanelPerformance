@@ -100,7 +100,8 @@ if __name__ == "__main__":
 
     data_dir = "./data/"
     csv_raw_data = "SolarPanel-RawData.csv"
-    csv_max_daily_production = "SolarPanel-MaxDailyProduction.csv"
+    csv_max_daily_production_csv = "SolarPanel-MaxDailyProduction.csv"
+    csv_max_daily_production_json = "SolarPanel-MaxDailyProduction.json"
 
     data_fileA = "SolarPanel-03-March-1-of-1-FullFeatures.xls"
     data_fileB = "SolarPanel-04-April-1-of-2-FullFeatures.xls"
@@ -154,9 +155,15 @@ if __name__ == "__main__":
     df_MaxDailyProduction = GetMaxDailyProduction(dataframe)
 
     df_MaxDailyProduction.to_csv(
-            data_dir + csv_max_daily_production, 
+            data_dir + csv_max_daily_production_csv, 
             index=False, 
             sep=';', 
             encoding='utf-8-sig')
+
+    df_MaxDailyProduction.to_json(
+        data_dir + csv_max_daily_production_json,
+        orient="index",
+        indent=4
+    )
 
     print("Dataframe 2: Daily Prod. (row x col):\t", df_MaxDailyProduction.shape)
