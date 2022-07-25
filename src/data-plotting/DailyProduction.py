@@ -84,8 +84,8 @@ if __name__ == "__main__":
     data_input_file = "SolarPanel-MaxDailyProduction.csv"
     plot_output_image = "DailyProduction.jpg"
 
-    startDay    = datetime(2022, 5, 1)
-    endDay      = datetime(2022, 6, 1)
+    startDay    = datetime(2022, 7, 1)
+    endDay      = datetime(2022, 8, 1)
 
     raw_df = pd.read_csv(data_dir + data_input_file, sep=';')
     raw_df['Date'] =  pd.to_datetime(raw_df['Date'], format='%Y-%m-%d %H:%M:%S')
