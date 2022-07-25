@@ -12,6 +12,8 @@ In the web:
 import pandas as pd
 from numpy import void
 import numpy as np
+from sqlalchemy import create_engine
+from sqlalchemy.types import Integer
 
 def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
     '''
@@ -144,14 +146,13 @@ if __name__ == "__main__":
         ])
     dataframe.columns = df_columns
 
-
     dataframe.to_csv(
             data_dir + csv_raw_data, 
             index=False, 
             sep=';', 
             encoding='utf-8-sig')
 
-    print("Dataframe 1: Full data (row x col):\t", dataframe.shape)
+    print("Dataframe 1 to CSV: Full data (row x col):\t", dataframe.shape)
             
     dataframe = pd.read_csv(data_dir + csv_raw_data, sep=';')
 
@@ -162,11 +163,23 @@ if __name__ == "__main__":
             index=False, 
             sep=';', 
             encoding='utf-8-sig')
-
+    
     df_MaxDailyProduction.to_json(
         data_dir + csv_max_daily_production_json,
         orient="index",
         indent=4
     )
 
-    print("Dataframe 2: Daily Prod. (row x col):\t", df_MaxDailyProduction.shape)
+    print("Dataframe 2 to CSV: Daily Prod. (row x col):\t", df_MaxDailyProduction.shape)
+
+    # Save as Sqlite database
+    engineA = create_engine('sqlite:///.\data\SolarPanel-MaxDailyProduction.db', echo=False)
+    rowcountA = df_MaxDailyProduction.to_sql('SolarPanel-MaxDailyProduction.db',con=engineA, index=False, if_exists='replace')
+    engineA.dispose()
+    print("Created.. SolarPanel-MaxDailyProduction.db:\t", rowcountA, "rows")
+
+    # Save as Sqlite database
+    engineB = create_engine('sqlite:///.\data\SolarPanel-RawData.db', echo=False)
+    rowcountB = dataframe.to_sql('SolarPanel-RawData.db',con=engineB, index=False, if_exists='replace')
+    engineB.dispose()
+    print("Created... SolarPanel-RawData.db:\t", rowcountB, "rows")
