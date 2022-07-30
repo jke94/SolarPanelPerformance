@@ -8,15 +8,15 @@ import numpy as np
 import time
 if __name__ == "__main__":
     
-    data_dir = "./data/"
-    image_dir = "./images/"
+    data_dir = "./01.Backend/data/"
+    image_dir = "./01.Backend/images/"
 
     data_input_file = "SolarPanel-MaxDailyProduction.csv"
     plot_output_image = "MaxPoderTime.jpg"
 
     now = datetime.now()
 
-    startDay    = datetime(2022, 3, 17)
+    startDay    = datetime(2022, 5, 1)
     endDay      = datetime(2022, 7, 1)
 
     raw_df = pd.read_csv(data_dir + data_input_file, sep=';')
