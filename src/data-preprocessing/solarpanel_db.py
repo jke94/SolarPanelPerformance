@@ -166,7 +166,7 @@ if __name__ == "__main__":
     
     df_MaxDailyProduction.to_json(
         data_dir + csv_max_daily_production_json,
-        orient="index",
+        orient='records',
         indent=4
     )
 
