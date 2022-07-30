@@ -12,6 +12,40 @@ A repository with python scripts to extract data plots based on database generat
 - pandas==1.4.0
 
 ## How to run
+
+### 1. Data preprocessing.
+
+#### 1.1 Parsing xls files to generate CSV, JSON and Sqlite files.
+
+- Command:
+
+```
+python .\01.Backend\src\data-preprocessing\solarpanel_db.py
+```
+#### 1.2 Extract custom data from raw data file.
+
+- Command:
+
+```
+python .\01.Backend\src\data-preprocessing\stadistic-work.py
+```
+
+### 2. Data ploting.
+
+#### 2.1 To generate a plot with daily production.
+
+- Command:
+
+```
+python .\01.Backend\src\data-plotting\DailyProduction.py
+```
+#### 2.2 To generate a plot max power time between two dates plot.
+
+- Command:
+
+```
+python .\01.Backend\src\data-plotting\MaxPoderTime.py
+```
 1. Download data (.xls) and put into 'data' folder.
 2. Edit 'MaximumDailyProduction.py' file with the correct .xls file name.
 3. Run: 'MaximumDailyProduction.py' file.

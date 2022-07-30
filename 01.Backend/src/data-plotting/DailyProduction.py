@@ -78,8 +78,8 @@ def PlotMaxDailyProduction(dataframe, fileOutput) -> void:
 
 if __name__ == "__main__":
     
-    data_dir = "./data/"
-    image_dir = "./images/"
+    data_dir = "./01.Backend/data/"
+    image_dir = "./01.Backend/images/"
 
     data_input_file = "SolarPanel-MaxDailyProduction.csv"
     plot_output_image = "DailyProduction.jpg"
