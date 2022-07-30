@@ -22,6 +22,13 @@ A repository with python scripts to extract data plots based on database generat
 ```
 python .\01.Backend\src\data-preprocessing\solarpanel_db.py
 ```
+#### 1.2 Extract custom data from raw data file.
+
+- Command:
+
+```
+python .\01.Backend\src\data-preprocessing\stadistic-work.py
+```
 
 ### 2. Data ploting.
 
