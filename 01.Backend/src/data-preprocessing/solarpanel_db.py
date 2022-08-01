@@ -14,6 +14,7 @@ from numpy import void
 import numpy as np
 from sqlalchemy import create_engine
 from sqlalchemy.types import Integer
+import DataframeBuilder as dfbuiler
 
 def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
     '''
@@ -102,8 +103,8 @@ if __name__ == "__main__":
 
     data_dir = "./01.Backend/data/"
     csv_raw_data = "SolarPanel-RawData.csv"
-    csv_max_daily_production_csv = "SolarPanel-MaxDailyProduction.csv"
-    csv_max_daily_production_json = "SolarPanel-MaxDailyProduction.json"
+    max_daily_production_csv = "SolarPanel-MaxDailyProduction.csv"
+    max_daily_production_json = "SolarPanel-MaxDailyProduction.json"
 
     data_fileA = "SolarPanel-03-March-1-of-1-FullFeatures.xls"
     data_fileB = "SolarPanel-04-April-1-of-2-FullFeatures.xls"
@@ -153,33 +154,47 @@ if __name__ == "__main__":
             encoding='utf-8-sig')
 
     print("Dataframe 1 to CSV: Full data (row x col):\t", dataframe.shape)
-            
-    dataframe = pd.read_csv(data_dir + csv_raw_data, sep=';')
 
-    df_MaxDailyProduction = GetMaxDailyProduction(dataframe)
+    dataframe = pd.read_csv(data_dir + csv_raw_data, sep=';')        
 
-    df_MaxDailyProduction.to_csv(
-            data_dir + csv_max_daily_production_csv, 
-            index=False, 
-            sep=';', 
-            encoding='utf-8-sig')
-    
-    df_MaxDailyProduction.to_json(
-        data_dir + csv_max_daily_production_json,
-        orient='records',
-        indent=4
+    dfb = dfbuiler.DataframeBuilder(
+        data_dir = "./01.Backend/data/",
+        csv_raw_data = "SolarPanel-RawData.csv",
+        json_raw_data = "SolarPanel-RawData.json",
+        max_daily_production_csv = "SolarPanel-MaxDailyProduction.csv",
+        max_daily_production_json = "SolarPanel-MaxDailyProduction.json" 
     )
 
-    print("Dataframe 2 to CSV: Daily Prod. (row x col):\t", df_MaxDailyProduction.shape)
+    dfb.createDataframeFromXlsFiles()
+    dfb.to_CSV()
+    # dfb.to_JSON()
 
-    # Save as Sqlite database
-    engineA = create_engine('sqlite:///.\\01.Backend\data\SolarPanel-MaxDailyProduction.db', echo=False)
-    rowcountA = df_MaxDailyProduction.to_sql('SolarPanel-MaxDailyProduction.db',con=engineA, index=False, if_exists='replace')
-    engineA.dispose()
-    print("Created.. SolarPanel-MaxDailyProduction.db:\t", rowcountA, "rows")
+    # dataframe = pd.read_csv(data_dir + csv_raw_data, sep=';')
 
-    # Save as Sqlite database
-    engineB = create_engine('sqlite:///.\\01.Backend\data\SolarPanel-RawData.db', echo=False)
-    rowcountB = dataframe.to_sql('SolarPanel-RawData.db',con=engineB, index=False, if_exists='replace')
-    engineB.dispose()
-    print("Created... SolarPanel-RawData.db:\t", rowcountB, "rows")
+    # df_MaxDailyProduction = GetMaxDailyProduction(dataframe)
+
+    # df_MaxDailyProduction.to_csv(
+    #         data_dir + max_daily_production_csv, 
+    #         index=False, 
+    #         sep=';', 
+    #         encoding='utf-8-sig')
+    
+    # df_MaxDailyProduction.to_json(
+    #     data_dir + max_daily_production_json,
+    #     orient='records',
+    #     indent=4
+    # )
+
+    # print("Dataframe 2 to CSV: Daily Prod. (row x col):\t", df_MaxDailyProduction.shape)
+
+    # # Save as Sqlite database
+    # engineA = create_engine('sqlite:///.\\01.Backend\data\SolarPanel-MaxDailyProduction.db', echo=False)
+    # rowcountA = df_MaxDailyProduction.to_sql('SolarPanel-MaxDailyProduction.db',con=engineA, index=False, if_exists='replace')
+    # engineA.dispose()
+    # print("Created.. SolarPanel-MaxDailyProduction.db:\t", rowcountA, "rows")
+
+    # # Save as Sqlite database
+    # engineB = create_engine('sqlite:///.\\01.Backend\data\SolarPanel-RawData.db', echo=False)
+    # rowcountB = dataframe.to_sql('SolarPanel-RawData.db',con=engineB, index=False, if_exists='replace')
+    # engineB.dispose()
+    # print("Created... SolarPanel-RawData.db:\t", rowcountB, "rows")
