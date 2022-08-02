@@ -16,7 +16,7 @@ class DataframeBuilder:
         DataFileHelperXls.data_fileI
     ]
 
-    __df_columns = [    'Hora',                       #   1  
+    __df_columns = [    'Hora',                     #   1  
                         'Modo de trabajo',          #   2 
                         'V MPPT 1(V)',              #   3
                         'I MPPT 1(A)',              #   4
@@ -31,24 +31,26 @@ class DataframeBuilder:
                         'RSSI(%)'                   #   13
     ]
 
-    def __init__(self, 
+    def __init__(
+        self, 
         data_dir, 
         csv_raw_data,
-        json_raw_data,
-        max_daily_production_csv, 
-        max_daily_production_json):
+        json_raw_data):
 
         self.__data_dir = data_dir
         self.__csv_raw_data = csv_raw_data
         self.__json_raw_data = json_raw_data
-        self.__max_daily_production_csv = max_daily_production_csv
-        self.__max_daily_production_json = max_daily_production_json
         self.__dataframe = pd.DataFrame()
         self.__dataframes = []
+
+        self.__createDataframeFromXlsFiles()
+
+    def GetRawDataframe(self):
+
+        return self.__dataframe
         
-
-    def createDataframeFromXlsFiles(self):
-
+    def __createDataframeFromXlsFiles(self):
+        
         for item in range(len(self.files)):
             self.__dataframes.append(
                     pd.read_excel(
@@ -56,7 +58,7 @@ class DataframeBuilder:
 
         # Build a dataframe with all values (joining the differents dataframes by xls file)
         for item in range(len(self.files)):
-            self.__dataframe = pd.concat(self.__dataframes)
+            self.__dataframe = pd.concat(self.__dataframes, ignore_index=True)
 
         # Set columns.
         self.__dataframe.columns = self.__df_columns
@@ -69,7 +71,7 @@ class DataframeBuilder:
             sep=';', 
             encoding='utf-8-sig')
 
-        print(f"Dataframe {self.__csv_raw_data} raw data to CSV: Full data (row x col): {self.__dataframe.shape}\t")
+        print(f"Dataframe '{self.__csv_raw_data}' raw data: Full data (row x col): {self.__dataframe.shape}\t")
 
     def to_JSON(self):
         
@@ -79,4 +81,4 @@ class DataframeBuilder:
             indent=4
         )
 
-        print(f"Dataframe {self.__json_raw_data} raw data to CSV: Full data (row x col): {self.__dataframe.shape}\t")
+        print(f"Dataframe '{self.__json_raw_data}' raw data: Full data (row x col): {self.__dataframe.shape}\t")
