@@ -945,10 +945,17 @@
         "MaxPoderTime":"16:30:15"
     },
     {
-        "Date":"2022-07-30 12:28:26",
-        "MaxDailyProduction":2.6,
-        "DailyHistoricalAverage":11.5,
-        "MaxPoder":1395,
-        "MaxPoderTime":"12:27:26"
+        "Date":"2022-07-30 22:15:31",
+        "MaxDailyProduction":14.4,
+        "DailyHistoricalAverage":11.59,
+        "MaxPoder":1823,
+        "MaxPoderTime":"15:15:44"
+    },
+    {
+        "Date":"2022-07-31 22:13:12",
+        "MaxDailyProduction":13.7,
+        "DailyHistoricalAverage":11.6,
+        "MaxPoder":1814,
+        "MaxPoderTime":"15:20:27"
     }
 ]
