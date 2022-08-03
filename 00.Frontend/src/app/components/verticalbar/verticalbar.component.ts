@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartData } from 'chart.js';
 import { ChartOptions } from 'chart.js';
+import { DailyProduction } from 'src/app/models/interfaces/daily-production';
+import { DataServiceService } from 'src/app/services/data-service/data-service.service';
 
 @Component({
   selector: 'app-verticalbar',
@@ -9,26 +11,52 @@ import { ChartOptions } from 'chart.js';
 })
 export class VerticalbarComponent implements OnInit {
 
-  constructor() { }
+  data!: DailyProduction[];
+  elements!: DailyProduction[];
+  myValue!:Array<number>;
 
-  ngOnInit(): void {
-  }
-  salesData: ChartData<'bar'> = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    datasets: [
-      { label: 'Mobiles', data: [1000, 1200, 1050, 2000, 500] },
-      { label: 'Laptop', data: [200, 100, 400, 50, 90] },
-      { label: 'AC', data: [500, 400, 350, 450, 650] },
-      { label: 'Headset', data: [1200, 1500, 1020, 1600, 900] },
-    ],
-  };
+  salesData!: ChartData<'bar'>
   chartOptions: ChartOptions = {
     responsive: true,
     plugins: {
       title: {
         display: true,
-        text: 'Monthly Sales Data',
+        text: 'April´s Production',
       },
     },
   };
+
+  constructor(private dataServiceService: DataServiceService) {  }
+
+  ngOnInit(): void {
+    this.dataServiceService.getJSON().subscribe(data => {
+      this.data = data as DailyProduction[];
+      console.log(this.data)
+      console.log(this.data.length)
+
+    });
+
+    var dateA = new Date("2022-04-01");
+    var dateB = new Date("2022-05-01");
+
+    this.dataServiceService.getJSON()
+      .subscribe(data => {
+        var tmp = data as DailyProduction[];
+
+        this.elements = tmp.filter(function (item) {
+          var itemTime = new Date(item.Date).getTime()
+          return itemTime >= dateA.getTime() && itemTime <= dateB.getTime();
+        })
+
+        this.myValue = Array.from({length: this.elements.length}, (value, key) => key + 1)
+        
+        this.salesData = {
+          labels: this.elements.map(i =>i.Date),
+          datasets: [
+            { label: 'Production (kWh)', data: this.elements.map(i =>i.MaxDailyProduction) }
+          ],
+        };
+      });
+
+  }
 }
