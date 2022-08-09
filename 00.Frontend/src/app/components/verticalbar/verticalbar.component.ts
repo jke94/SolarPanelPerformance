@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { ChartData } from 'chart.js';
 import { ChartOptions } from 'chart.js';
 import { DailyProduction } from 'src/app/models/interfaces/daily-production';
 import { DataServiceService } from 'src/app/services/data-service/data-service.service';
+import { DatesDatepickerService } from '../../services/dates-datepicker/dates-datepicker-service.service'
+
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-verticalbar',
@@ -15,6 +18,9 @@ export class VerticalbarComponent implements OnInit {
   elements!: DailyProduction[];
   myValue!:Array<number>;
 
+  dateA!: Date;
+  dateB!: Date;
+
   salesData!: ChartData<'bar'>
   chartOptions: ChartOptions = {
     responsive: true,
@@ -26,18 +32,17 @@ export class VerticalbarComponent implements OnInit {
     },
   };
 
-  constructor(private dataServiceService: DataServiceService) {  }
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
-  ngOnInit(): void {
-    this.dataServiceService.getJSON().subscribe(data => {
-      this.data = data as DailyProduction[];
-      console.log(this.data)
-      console.log(this.data.length)
+  constructor(
+    private dataServiceService: DataServiceService,
+    private datesDatepickerService: DatesDatepickerService) { 
+      
+     }
 
-    });
-
-    var dateA = new Date("2022-04-01");
-    var dateB = new Date("2022-05-01");
+  getData(){
+    var dateA = this.datesDatepickerService.dateFrom;
+    var dateB = this.datesDatepickerService.dateTo;
 
     this.dataServiceService.getJSON()
       .subscribe(data => {
@@ -53,10 +58,15 @@ export class VerticalbarComponent implements OnInit {
         this.salesData = {
           labels: this.elements.map(i =>i.Date),
           datasets: [
-            { label: 'Production (kWh)', data: this.elements.map(i =>i.MaxDailyProduction) }
+            { label: 'Production (kWh)', data: this.elements.map(i => i.MaxDailyProduction) }
           ],
         };
       });
 
+    this.chart?.update()
+  }
+
+  ngOnInit(): void {
+    
   }
 }

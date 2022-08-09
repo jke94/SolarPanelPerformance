@@ -1,0 +1,18 @@
+<mat-form-field appearance="fill" class="example-form-field">
+  <mat-label>Enter a date range</mat-label>
+  <mat-date-range-input [rangePicker]="rangePicker">
+    <input matStartDate placeholder="Start date" (dateInput)="getDateFrom($event)">
+    <input matEndDate placeholder="End date" (dateInput)="getDateTo($event)">
+  </mat-date-range-input>
+  <!-- <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint> -->
+  <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+  <mat-date-range-picker #rangePicker>
+    <mat-date-range-picker-actions>
+      <button mat-button matDateRangePickerCancel>Cancel</button>
+      <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+    </mat-date-range-picker-actions>
+  </mat-date-range-picker>
+</mat-form-field>
+
+<h2>From: {{dateFrom}}</h2>
+<h2>To: {{dateTo}}</h2>
