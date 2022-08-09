@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartData } from 'chart.js';
 import { ChartOptions } from 'chart.js';
 import { DailyProduction } from 'src/app/models/interfaces/daily-production';
@@ -16,7 +16,7 @@ export class VerticalbarComponent implements OnInit {
 
   data!: DailyProduction[];
   elements!: DailyProduction[];
-  myValue!:Array<number>;
+  myValue!: Array<number>;
 
   dateA!: Date;
   dateB!: Date;
@@ -26,8 +26,7 @@ export class VerticalbarComponent implements OnInit {
     responsive: true,
     plugins: {
       title: {
-        display: true,
-        text: 'April´s Production',
+        display: true
       },
     },
   };
@@ -36,11 +35,11 @@ export class VerticalbarComponent implements OnInit {
 
   constructor(
     private dataServiceService: DataServiceService,
-    private datesDatepickerService: DatesDatepickerService) { 
-      
-     }
+    private datesDatepickerService: DatesDatepickerService) {
 
-  getData(){
+  }
+
+  getData() {
     var dateA = this.datesDatepickerService.dateFrom;
     var dateB = this.datesDatepickerService.dateTo;
 
@@ -53,10 +52,10 @@ export class VerticalbarComponent implements OnInit {
           return itemTime >= dateA.getTime() && itemTime <= dateB.getTime();
         })
 
-        this.myValue = Array.from({length: this.elements.length}, (value, key) => key + 1)
-        
+        this.myValue = Array.from({ length: this.elements.length }, (value, key) => key + 1)
+
         this.salesData = {
-          labels: this.elements.map(i =>i.Date),
+          labels: this.elements.map(i => i.Date),
           datasets: [
             { label: 'Production (kWh)', data: this.elements.map(i => i.MaxDailyProduction) }
           ],
@@ -67,6 +66,6 @@ export class VerticalbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 }
