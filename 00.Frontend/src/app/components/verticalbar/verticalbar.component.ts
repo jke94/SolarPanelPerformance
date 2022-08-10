@@ -4,7 +4,7 @@ import { ChartOptions } from 'chart.js';
 import { DailyProduction } from 'src/app/models/interfaces/daily-production';
 import { DataServiceService } from 'src/app/services/data-service/data-service.service';
 import { DatesDatepickerService } from '../../services/dates-datepicker/dates-datepicker-service.service'
-
+import { DatePipe } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
@@ -55,9 +55,16 @@ export class VerticalbarComponent implements OnInit {
         this.myValue = Array.from({ length: this.elements.length }, (value, key) => key + 1)
 
         this.salesData = {
-          labels: this.elements.map(i => i.Date),
+          labels: this.elements.map(r =>{
+            const datepipe: DatePipe = new DatePipe('en-US')
+            let formattedDate = datepipe.transform(r.Date, 'dd-MM-yy')
+            return formattedDate
+          }),
           datasets: [
-            { label: 'Production (kWh)', data: this.elements.map(i => i.MaxDailyProduction) }
+            { 
+              label: 'Production (kWh)', data: this.elements.map(i => i.MaxDailyProduction),
+              backgroundColor: 'rgb(255, 208, 71)'
+            }
           ],
         };
       });

@@ -1,11 +1,29 @@
-<div class="button-row">
-    <button mat-button mat-raised-button color="primary" (click)="getData()">Get data</button>
+<div class="container text-center" >
+    <div class="row" style="padding: 5px;">
+        <button mat-button mat-raised-button color="primary" (click)="getData()">Get data</button>
+    </div>
+    <div class="row">
+        <div *ngIf="!salesData; else elseBlock">
+            <div class="alert alert-primary" role="alert">
+                Select two dates!
+            </div>      
+        </div>
+        <ng-template #elseBlock>
+            <div *ngIf="salesData.labels?.length != 0; else elseBlock">
+                <canvas baseChart 
+                  [data]="salesData" 
+                  [type]="'bar'" 
+                  [options]="chartOptions" 
+                  [width]="1000" 
+                  [height]="750">
+                </canvas>      
+            </div>
+            <ng-template #elseBlock>
+                <div class="alert alert-danger" role="alert">
+                    No data available! Select dates again!
+                  </div>
+            </ng-template>
+        </ng-template>
+    </div>
 </div>
 
-<canvas baseChart 
-    [data]="salesData" 
-    [type]="'bar'" 
-    [options]="chartOptions"
-    [width]="1000"
-    [height]="750">
-</canvas>
