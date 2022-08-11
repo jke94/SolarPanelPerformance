@@ -16,7 +16,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatesDatepickerService } from './services/dates-datepicker/dates-datepicker-service.service';
 import { DataServiceService} from './services/data-service/data-service.service'
 import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
+import { Routes, RouterModule } from '@angular/router';
+import { ContactComponent } from './components/contact/contact.component';
+import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+
+const rutas: Routes = [
+  { path: '', component: WelcomePageComponent },
+  { path: 'welcome-page', component: WelcomePageComponent },
+  { path: 'data', component: MainComponent },
+  { path: 'contact', component: ContactComponent }
+];
 
 @NgModule({
   declarations: [
@@ -24,6 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
     VerticalbarComponent,
     DatesDatepickerComponent,
     MainComponent,
+    NavbarComponent,
+    WelcomePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +51,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     BrowserAnimationsModule,
     MatNativeDateModule,
+    RouterModule.forRoot(rutas)
   ],
   providers: [
     DatesDatepickerService
