@@ -21,12 +21,14 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ContactComponent } from './components/contact/contact.component';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const rutas: Routes = [
   { path: '', component: WelcomePageComponent },
   { path: 'welcome-page', component: WelcomePageComponent },
   { path: 'data', component: MainComponent },
-  { path: 'contact', component: ContactComponent }
+  { path: 'contact', component: ContactComponent },
+  { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 
 @NgModule({
@@ -37,6 +39,7 @@ const rutas: Routes = [
     MainComponent,
     NavbarComponent,
     WelcomePageComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
