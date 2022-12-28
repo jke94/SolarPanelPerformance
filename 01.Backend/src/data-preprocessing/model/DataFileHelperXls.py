@@ -10,3 +10,6 @@ class DataFileHelperXls(StrEnum):
     data_fileG = "SolarPanel-06-June-2-of-2-FullFeatures.xls"
     data_fileH = "SolarPanel-07-July-1-of-2-FullFeatures.xls"
     data_fileI = "SolarPanel-07-July-2-of-2-FullFeatures.xls"
+
+    data_fileJ = "SolarPanel-12-December-1-of-2-FullFeatures.xls"
+    data_fileK = "SolarPanel-12-December-2-of-2-FullFeatures.xls"
