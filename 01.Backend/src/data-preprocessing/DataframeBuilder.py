@@ -13,7 +13,11 @@ class DataframeBuilder:
         DataFileHelperXls.data_fileF,
         DataFileHelperXls.data_fileG,
         DataFileHelperXls.data_fileH,
-        DataFileHelperXls.data_fileI
+        DataFileHelperXls.data_fileI,
+
+        DataFileHelperXls.data_fileJ,
+        DataFileHelperXls.data_fileK,
+        DataFileHelperXls.data_fileL
     ]
 
     __df_columns = [    'Hora',                     #   1  
