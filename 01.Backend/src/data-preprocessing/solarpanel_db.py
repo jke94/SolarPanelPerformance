@@ -51,10 +51,16 @@ def GetMaxDailyProduction(df_raw) -> pd.DataFrame:
     # Extract maximum daily production
     for index in range(df_raw_len):
 
-        if (index + 1 < df_raw_len and 
-            df_raw['Salida de hoy(kWh)'][index] > max and 
-            df_raw['Salida de hoy(kWh)'][index + 1 ] == 0): 
-
+        # TODO: Improve the if sentence
+        if (
+            (index + 1 < df_raw_len) 
+            and 
+            (
+                (df_raw['Salida de hoy(kWh)'][index] > max and df_raw['Salida de hoy(kWh)'][index + 1 ] == 0)
+                or 
+                ((df_raw['Hora'][index + 1] - df_raw['Hora'][index]).days > 0) # Lost data.
+            )):
+        
             # We have the daily maximum!
             max = df_raw['Salida de hoy(kWh)'][index]
             max_array.append(max)
