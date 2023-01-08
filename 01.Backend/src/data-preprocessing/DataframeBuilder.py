@@ -16,7 +16,8 @@ class DataframeBuilder:
         DataFileHelperXls.data_fileI,
 
         DataFileHelperXls.data_fileJ,
-        DataFileHelperXls.data_fileK
+        DataFileHelperXls.data_fileK,
+        DataFileHelperXls.data_fileL
     ]
 
     __df_columns = [    'Hora',                     #   1  
