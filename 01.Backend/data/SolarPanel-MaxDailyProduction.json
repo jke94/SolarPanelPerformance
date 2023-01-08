@@ -1120,10 +1120,80 @@
         "MaxPoderTime":"14:06:55"
     },
     {
-        "Date":"2022-12-28 17:35:32",
+        "Date":"2022-12-28 18:19:36",
         "MaxDailyProduction":1.3,
         "DailyHistoricalAverage":10.1,
         "MaxPoder":718,
         "MaxPoderTime":"12:02:57"
+    },
+    {
+        "Date":"2022-12-29 18:06:44",
+        "MaxDailyProduction":1.3,
+        "DailyHistoricalAverage":10.04,
+        "MaxPoder":403,
+        "MaxPoderTime":"13:07:13"
+    },
+    {
+        "Date":"2022-12-30 18:15:04",
+        "MaxDailyProduction":0.9,
+        "DailyHistoricalAverage":9.99,
+        "MaxPoder":284,
+        "MaxPoderTime":"15:00:43"
+    },
+    {
+        "Date":"2022-12-31 18:23:35",
+        "MaxDailyProduction":2.7,
+        "DailyHistoricalAverage":9.94,
+        "MaxPoder":1424,
+        "MaxPoderTime":"13:20:02"
+    },
+    {
+        "Date":"2023-01-01 18:07:26",
+        "MaxDailyProduction":0.7,
+        "DailyHistoricalAverage":9.89,
+        "MaxPoder":186,
+        "MaxPoderTime":"12:42:52"
+    },
+    {
+        "Date":"2023-01-02 18:34:12",
+        "MaxDailyProduction":6.5,
+        "DailyHistoricalAverage":9.87,
+        "MaxPoder":1621,
+        "MaxPoderTime":"13:57:42"
+    },
+    {
+        "Date":"2023-01-03 18:35:19",
+        "MaxDailyProduction":7.4,
+        "DailyHistoricalAverage":9.85,
+        "MaxPoder":1355,
+        "MaxPoderTime":"14:03:50"
+    },
+    {
+        "Date":"2023-01-04 18:39:10",
+        "MaxDailyProduction":7.5,
+        "DailyHistoricalAverage":9.84,
+        "MaxPoder":1326,
+        "MaxPoderTime":"14:25:44"
+    },
+    {
+        "Date":"2023-01-05 18:38:28",
+        "MaxDailyProduction":7.6,
+        "DailyHistoricalAverage":9.82,
+        "MaxPoder":1340,
+        "MaxPoderTime":"14:27:02"
+    },
+    {
+        "Date":"2023-01-06 18:30:34",
+        "MaxDailyProduction":2.2,
+        "DailyHistoricalAverage":9.78,
+        "MaxPoder":554,
+        "MaxPoderTime":"14:33:21"
+    },
+    {
+        "Date":"2023-01-07 16:10:37",
+        "MaxDailyProduction":1.0,
+        "DailyHistoricalAverage":9.73,
+        "MaxPoder":349,
+        "MaxPoderTime":"12:39:13"
     }
 ]
