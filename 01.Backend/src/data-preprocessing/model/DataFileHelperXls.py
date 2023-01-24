@@ -14,3 +14,4 @@ class DataFileHelperXls(StrEnum):
     data_fileJ = "SolarPanel-12-2022-December-1-of-2-FullFeatures.xls"
     data_fileK = "SolarPanel-12-2022-December-2-of-2-FullFeatures.xls"
     data_fileL = "SolarPanel-01-2023-January-1-of-2-FullFeatures.xls"
+    data_fileM = "SolarPanel-01-2023-January-2-of-2-FullFeatures.xls"
