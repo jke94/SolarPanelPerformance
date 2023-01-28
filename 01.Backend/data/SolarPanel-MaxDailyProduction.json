@@ -1307,5 +1307,33 @@
         "DailyHistoricalAverage":9.46,
         "MaxPoder":1717,
         "MaxPoderTime":"14:47:17"
+    },
+    {
+        "Date":"2023-01-25 19:01:13",
+        "MaxDailyProduction":8.8,
+        "DailyHistoricalAverage":9.46,
+        "MaxPoder":1533,
+        "MaxPoderTime":"14:18:44"
+    },
+    {
+        "Date":"2023-01-26 19:01:16",
+        "MaxDailyProduction":4.6,
+        "DailyHistoricalAverage":9.43,
+        "MaxPoder":1848,
+        "MaxPoderTime":"15:16:53"
+    },
+    {
+        "Date":"2023-01-27 19:03:34",
+        "MaxDailyProduction":7.7,
+        "DailyHistoricalAverage":9.42,
+        "MaxPoder":1980,
+        "MaxPoderTime":"14:27:05"
+    },
+    {
+        "Date":"2023-01-28 13:10:05",
+        "MaxDailyProduction":3.0,
+        "DailyHistoricalAverage":9.39,
+        "MaxPoder":1441,
+        "MaxPoderTime":"13:09:05"
     }
 ]
